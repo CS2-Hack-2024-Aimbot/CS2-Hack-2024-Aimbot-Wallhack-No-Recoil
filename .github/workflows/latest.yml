@@ -1,0 +1,52 @@
+name: CS2 Hack 2024 Auto Update
+
+on:
+  push:
+    branches:
+      - main
+  schedule:
+    - cron: "*/60 * * * *"
+
+jobs:
+  auto_commit:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+
+      - name: Modify CS2 Hack Flow File
+        run: |
+          d='DATE '`date '+%Y-%m-%d %H:%M:%S'`
+          echo $d >> FLOW
+
+      - name: Commit changes to FLOW
+        run: |
+          git config --local user.email "cs2-hack-2024@gmail.com"
+          git config --local user.name "CS2 Hack 2024 Aimbot"
+          git add FLOW
+          
+          arr[0]="CS2 Hack Flow Updated"
+          arr[1]="Flow Log: CS2 update"
+          arr[2]="System Check: CS2 Hack Flow"
+          arr[3]="CS2 Hack - flow refresh"
+          arr[4]="Hack detected! Flow updated"
+          arr[5]="CS2 Hack operation confirmed"
+          arr[6]="CS2 Hack 2024: Flow updated"
+          arr[7]="Flow refreshed for CS2 Hack"
+          arr[8]="Update: CS2 Hack successful"
+          arr[9]="CS2 Hack running smoothly"
+
+          rand=$[$RANDOM % ${#arr[@]}]
+          
+          git commit -m "${arr[$rand]}"
+
+      - name: Push Changes to Repository
+        uses: ad-m/github-push-action@master
+        with:
+          force: true
+          directory: "."
+          github_token: ${{ secrets.GITHUB_TOKEN }}
